@@ -1,0 +1,11 @@
+groups:
+  - name: Connection was slow
+    rules:
+      - alert: SlowConnection
+        expr: probe_http_duration_seconds{phase="connect"} > 0.00025
+        for: 3s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Connection to {{ $labels.instance }} is slow"
+          description: "The connection to the target instance {{ $labels.instance }} has been slow for more than 5 minutes."
